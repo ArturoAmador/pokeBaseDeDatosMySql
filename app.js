@@ -29,8 +29,6 @@ app.get('/',(req,res) => {
   return res.render('index',{});
 });
 
-
-
 app.get('/getPokemons',(req,res) => {
 
       db.query("SELECT * FROM pokedex", function (err, pokemon, fields) {
@@ -57,6 +55,11 @@ app.get('/pokemon/:id',(req,res) => {
         }
         return res.render('pokedex',{pokemon});
     });
+});
+
+app.get('/registro',(req,res)=>{
+    return res.render('registro',{});
+
 });
 
   
