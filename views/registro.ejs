@@ -45,18 +45,26 @@
 <br/>
 <div class="row">
     <div class="col-12 col-md-6" style="margin: auto;">
-        <form>
+        <form action="/registroEntrenador" method="POST">
             <div class="form-group">
                 <label for="name">Nombre</label>
-                <input type="text" class="form-control" id="name" placeholder="Ash" required/>
+                <input name="name" type="text" class="form-control" id="name" placeholder="Ash" required/>
             </div>
             <div class="form-group">
                 <label for="date">Fecha Nacimietnto</label>
-                <input type="date" class="form-control" id="date" required/>
+                <input name="date" type="date" class="form-control" id="date" required/>
             </div>
             <div class="form-group">
                 <label for="region">Region</label>
-                <input type="text" class="form-control" id="region" placeholder="Pueblo Paleta" required/>
+                <input name="region" type="text" class="form-control" id="region" placeholder="Pueblo Paleta" required/>
+            </div>
+            <div class="form-group">
+                <label for="">Pokemon Principal</label>
+                <select name="pokemon" class="form-control">
+                    <% pokemon.forEach(function(idx){ %>
+                        <option value="<%= idx.numero %>"><%= idx.name %></option>
+                    <% }); %>>
+                </select>
             </div>
             <button type="submit" class="btn btn-primary">Registrar</button>
         </form>

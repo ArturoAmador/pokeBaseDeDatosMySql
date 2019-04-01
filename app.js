@@ -58,12 +58,38 @@ app.get('/pokemon/:id',(req,res) => {
 });
 
 app.get('/registro',(req,res)=>{
-    return res.render('registro',{});
+    db.query("SELECT * FROM pokedex", function (err, pokemon, fields) {
+        if (err) {
+            return res.status(500).send({status:'erro', 'Error':err});
+        }
+
+        return res.render('registro',{pokemon});
+
+    });
 
 });
 
-  
-  
+app.post('/registroEntrenador', (req,res) => {
+    let name    = req.body.name;
+    let date    = req.body.birthDay;
+    let region  = req.body.region;
+    let pokemon = req.body.pokemon;
+
+    //TODO: revisar porque los datos no llegan del fromulario
+    let sql = `INSERT INTO trainer (nombre, birthDate, region, pokemon) VALUES ("${name}",${date},${region},"${pokemon}");`;
+
+    console.log(req);
+    console.log(`${name},${date},${region},${pokemon}`);
+
+    db.query(sql, function (err, result) {
+        if (err) {
+            return res.status(500).send({'status':'erro', 'Error':err});
+        }
+        console.log("1 record inserted");
+        return res.send({status:'success', 'Message':result});
+    });
+
+});
 
   //Crear base de datos
   /*con.connect(function(err) {
@@ -91,7 +117,7 @@ app.get('/registro',(req,res)=>{
         setTimeout(() => {
           let sql = `INSERT INTO pokedex (name, numero, height, weight, sprite) VALUES ("${p.data.name}",${i},${p.data.height},${p.data.weight},"${p.data.sprites.front_default}");`;
           console.log(sql);
-          con.query(sql, function (err, result) {
+          db.query(sql, function (err, result) {
             if (err) throw err;
             
             console.log("1 record inserted");
