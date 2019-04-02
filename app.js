@@ -1,12 +1,17 @@
 const mysql = require('mysql');
 const axios = require('axios');
 const express = require('express');
-const cors = require('cors')
+const cors = require('cors');
+const bodyParser = require('body-parser');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use('/public/images/', express.static('../public/img'));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+
 app.set('view engine', 'ejs');
 
 let db = mysql.createConnection({
@@ -71,14 +76,15 @@ app.get('/registro',(req,res)=>{
 
 app.post('/registroEntrenador', (req,res) => {
     let name    = req.body.name;
-    let date    = req.body.birthDay;
+    let date    = String(req.body.date);
     let region  = req.body.region;
     let pokemon = req.body.pokemon;
 
     //TODO: revisar porque los datos no llegan del fromulario
-    let sql = `INSERT INTO trainer (nombre, birthDate, region, pokemon) VALUES ("${name}",${date},${region},"${pokemon}");`;
 
-    console.log(req);
+    let sql = `INSERT INTO trainer (nombre, birthDate, region, pokemon) VALUES ("${name}","${date}","${region}",${pokemon});`;
+
+    console.log(req.parameters);
     console.log(`${name},${date},${region},${pokemon}`);
 
     db.query(sql, function (err, result) {
