@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Pokedex</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"/>
 </head>
@@ -23,18 +23,17 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="getPokemons">Pokedex</a>
+                <a class="nav-link" href="/">Home</a>
             </li>
             <li class="nav-item active">
+                <a class="nav-link" href="/getPokemons">Pokedex</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="/registro">Alta de Entrenador</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/getTrainer">Entrenadores</a>
             </li>
-
         </ul>
         <form class="form-inline my-2 my-lg-0">
             <input id="searchInput" class="form-control mr-sm-2" type="search" placeholder="número de pokemon" aria-label="Search">
@@ -43,43 +42,34 @@
     </div>
 </nav>
 <br/>
-<div class="row">
-    <div class="col-12 col-md-6" style="margin: auto;">
-        <form action="/registroEntrenador" method="post">
-            <div class="form-group">
-                <label for="name">Nombre</label>
-                <input name="name" type="text" class="form-control" id="name" placeholder="Ash" required/>
+<div class="row" style="max-width: 1400px; margin: auto;">
+    <% trainer.forEach(function(idx){ %>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="<%= idx.sprite %>" alt="Card image cap"/>
+                <div class="card-body">
+                    <h5 class="card-title">Pokemon: <%= idx.name %>  Entrenador: <%= idx.nombre %></h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"> Altura: <%= idx.height %> </li>
+                        <li class="list-group-item"> Peso: <%= idx.weight %> </li>
+                        <li class="list-group-item"> Numero: <%= idx.numero %>  </li>
+                        <li class="list-group-item"> Fecha Nacimiento: <%= idx.birthDate  %>  </li>
+                        <li class="list-group-item"> Pueblo: <%= idx.region %>  </li>
+                        <li class="list-group-item"> Tipo: <%= idx.tipo %>  </li>
+                        <li class="list-group-item"><button type="button" class="btn btn-danger" onclick='deletePokemon("<%= idx.nombre %>")' style="width: 100%;">Borrar</button></li>
+                    </ul>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="date">Fecha Nacimietnto</label>
-                <input name="date" type="date" class="form-control" id="date" required/>
-            </div>
-            <div class="form-group">
-                <label for="region">Region</label>
-                <input name="region" type="text" class="form-control" id="region" placeholder="Pueblo Paleta" required/>
-            </div>
-            <div class="form-group">
-                <label for="">Entrenador</label>
-                <select name="tipoEntrenador" class="form-control">
-                    <option value="trainer">Entrenador</option>
-                    <option value="lider">Lider de Gimnasio</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="">Pokemon Principal</label>
-                <select name="pokemon" class="form-control">
-                    <% pokemon.forEach(function(idx){ %>
-                        <option value="<%= idx.numero %>"><%= idx.name %></option>
-                    <% }); %>>
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary">Registrar</button>
-        </form>
-    </div>
-
+        </div><br/>
+    <% }); %>
 </div>
-</body>
+
 <script>
+
+    function deletePokemon(id){
+        document.location.href = `/deleteTrainer/${id}`;
+    }
+
     document.getElementById('buttonSearch').addEventListener("click",(event) => {
         event.preventDefault();
         let pokemonId = document.getElementById('searchInput').value;
@@ -91,4 +81,5 @@
         document.location.href = '/pokemon/'+pokemonId;
     });
 </script>
+</body>
 </html>

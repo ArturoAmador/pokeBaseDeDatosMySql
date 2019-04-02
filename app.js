@@ -78,11 +78,12 @@ app.post('/registroEntrenador', (req,res) => {
     let name    = req.body.name;
     let date    = String(req.body.date);
     let region  = req.body.region;
+    let type    = req.body.tipoEntrenador;
     let pokemon = req.body.pokemon;
 
     //TODO: revisar porque los datos no llegan del fromulario
 
-    let sql = `INSERT INTO trainer (nombre, birthDate, region, pokemon) VALUES ("${name}","${date}","${region}",${pokemon});`;
+    let sql = `INSERT INTO trainer (nombre, birthDate, region, tipo, pokemon) VALUES ("${name}","${date}","${region}","${type}",${pokemon});`;
 
     console.log(req.parameters);
     console.log(`${name},${date},${region},${pokemon}`);
@@ -97,6 +98,29 @@ app.post('/registroEntrenador', (req,res) => {
 
 });
 
+
+app.get('/getTrainer',(req,res) => {
+    db.query(`Select * from trainer as t, pokedex as p where t.pokemon = p.numero;`, function (err, trainer, fields) {
+        if (err) {
+            return res.status(500).send({status:'erro', 'Error':err});
+        }
+
+        return res.render('trainers',{trainer});
+
+    });
+});
+
+app.get('/deleteTrainer/:id',(req,res) => {
+
+    let id = req.params.id;
+    db.query(`DELETE FROM trainer WHERE nombre = "${id}"`, (err) => {
+        if (err) {
+            return res.status(500).send({status:'erro', 'Error':err});
+        }
+        return res.render('index',{});
+    });
+});
+
   //Crear base de datos
   /*con.connect(function(err) {
     if (err) throw err;
@@ -109,7 +133,7 @@ app.post('/registroEntrenador', (req,res) => {
   });*/
 
   //insertar elementos en MySql de la PokeApi
-  /*con.connect(function(err) {
+  /*db.connect(function(err) {
     if (err) throw err;
     console.log("Connected!");
 
