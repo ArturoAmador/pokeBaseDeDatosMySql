@@ -49,12 +49,17 @@
             <div class="card" style="width: 18rem;">
                 <img class="card-img-top" src="<%= idx.sprite %>" alt="Card image cap"/>
                 <div class="card-body">
-                    <h5 class="card-title"><%= idx.name %></h5>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item"> Altura: <%= idx.height %> </li>
-                        <li class="list-group-item"> Peso: <%= idx.weight %> </li>
-                        <li class="list-group-item"> Numero: <%= idx.numero %>  </li>
-                    </ul>
+                    <form action="/updatePokemon" method="POST">
+                        <h5 class="card-title"><%= idx.name %></h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"> Altura: <input type="text" name="height" value="<%= idx.height %> "></li>
+                            <li class="list-group-item"> Peso: <input type="number" name="weight" value="<%= idx.weight %>"> </li>
+                            <li class="list-group-item"> Numero: <input type="text" name="id" value=" <%= idx.numero %>" disabled> </li>
+                        </ul>
+                        <br>
+                        <button type="submit" class="btn btn-success" style="width: 100%;">Actualizar</button>
+                        <br>
+                    </form>
                 </div>
             </div>
         </div><br/>

@@ -123,10 +123,10 @@ app.get('/deleteTrainer/:id',(req,res) => {
     });
 });
 
-app.post('/updatePokemon/:id',(req,res) =>{
-  let id = req.param.id;
-  let peso = req.body.params.weigth;
-  let altura = req.body.params.height;
+app.post('/updatePokemon',(req,res) =>{
+  let id = req.body.id;
+  let peso = req.body.weigth;
+  let altura = req.body.height;
   db.query(`UPDATE pokedex SET height = ${altura}, weight = ${peso} WHERE numero = ${id}`, (err)=>{
     if (err) {
       return res.status(500).send({status:'erro', 'Error':err});
