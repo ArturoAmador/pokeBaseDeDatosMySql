@@ -62,6 +62,8 @@ app.get('/pokemon/:id',(req,res) => {
     });
 });
 
+
+
 app.get('/registro',(req,res)=>{
     db.query("SELECT * FROM pokedex", function (err, pokemon, fields) {
         if (err) {
@@ -120,6 +122,18 @@ app.get('/deleteTrainer/:id',(req,res) => {
         return res.render('index',{});
     });
 });
+
+app.post('/updatePokemon/:id',(req,res) =>{
+  let id = req.param.id;
+  let peso = req.body.params.weigth;
+  let altura = req.body.params.height;
+  db.query(`UPDATE pokedex SET height = ${altura}, weight = ${peso} WHERE numero = ${id}`, (err)=>{
+    if (err) {
+      return res.status(500).send({status:'erro', 'Error':err});
+    }
+    return res.render('index',{});
+  });
+})
 
   //Crear base de datos
   /*con.connect(function(err) {
