@@ -54,7 +54,9 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"> Altura: <input type="text" name="height" value="<%= idx.height %> "></li>
                             <li class="list-group-item"> Peso: <input type="number" name="weight" value="<%= idx.weight %>"> </li>
-                            <li class="list-group-item"> Numero: <input type="text" name="id" value=" <%= idx.numero %>" disabled> </li>
+                            <li class="list-group-item"> Numero:
+                                    <input type="text" name="idNumber" value=" <%= idx.numero %>" readonly="readonly">
+                            </li>
                         </ul>
                         <br>
                         <button type="submit" class="btn btn-success" style="width: 100%;">Actualizar</button>

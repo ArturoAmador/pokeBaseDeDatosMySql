@@ -124,16 +124,18 @@ app.get('/deleteTrainer/:id',(req,res) => {
 });
 
 app.post('/updatePokemon',(req,res) =>{
-  let id = req.body.id;
-  let peso = req.body.weigth;
-  let altura = req.body.height;
-  db.query(`UPDATE pokedex SET height = ${altura}, weight = ${peso} WHERE numero = ${id}`, (err)=>{
+
+    console.log(req.body);
+    let id = req.body.idNumber;
+    let peso = req.body.weight;
+    let altura = req.body.height;
+    db.query(`UPDATE pokedex SET height = ${altura}, weight = ${peso} WHERE numero = ${id}`, (err)=>{
     if (err) {
-      return res.status(500).send({status:'erro', 'Error':err});
+      return res.status(500).send({status:'error', 'Error':err});
     }
     return res.render('index',{});
-  });
-})
+    });
+});
 
   //Crear base de datos
   /*con.connect(function(err) {
@@ -170,7 +172,7 @@ app.post('/updatePokemon',(req,res) =>{
         }, 3000);
       }
     }  
-    pokeRoboDelSiglo(1,182);
+    pokeRoboDelSiglo(1,320);
   });*/
 
 
